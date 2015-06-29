@@ -1,0 +1,16 @@
+LICENSING
+=========
+
+The Controls.js is available in two licensing options: 
+
+commercial and open source license. 
+
+You may use Controls.js free of charge under the open source license (GPLv3 license) 
+but you must comply with the terms of the license agreement, which requires you to 
+distribute your application also under open source license and that you release source 
+code of application to the general public.
+
+Alternatively, you can purchase a commercial license where releasing of the application's 
+source code is not required.
+
+For more information, see http://controlsjs.com

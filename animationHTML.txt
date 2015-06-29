@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Animation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../ePortfolio.css" type="text/css">
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="lib/Animation.js"></script>
+        <script type='text/javascript' src='lib/canvasjs-1.7.0/canvasjs.min.js'></script>
+        <script type='text/javascript' src='lib/canvasjs-1.7.0/jquery.canvasjs.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <canvas id="myCanvas" width="400" height="200"></canvas>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Statistical Analysis</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../ePortfolio.css" type="text/css">
+        <script src="./lib/Statistics.js" type="text/javascript" language="javascript"></script>        
+    </head>
+    <body>
+        <div id="heading">
+            <h3>Assignment 3: Statistical Analysis</h3>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th><a href="../index.html">Home</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/Assign1/index.html">About Me</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/assign2/index.html">Estimate</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/assign3/index.html">Statstics</a></th>
+                    <th><a href="http://www.groundworkjacksonville.org/" target="_blank">Groundwork Jax</a></th>
+                    <th><a href="http://www.clinasyst.net" target="_blank">Clinasyst CTMS</a></th>
+                    <th><a href="http://www.jaxresearch.com" target="_blank">Jax Research</a></th>
+                    <th><a href="mailto:n00816280@unf.edu">Contact Me</a></th>
+                    <!--<th><a href="http://www.linkedin.com">
+                        <img src="https://static.licdn.com/scds/common/u/img/logos/logo_132x32_2.png" alt = "Linked-in"></a>
+                    </th>-->
+                </tr>
+            </table>
+        </div>
+        <div>
+            <form>
+                <table>
+                    <caption>Calculate Statistical Analysis Summary</caption>
+                    <tr>
+                        <td><input type="button" id="addNum" name="addNum" value="Add a Number" onClick="addNumbers()">
+                            <input type="text" id="numValues" name="numValues" value="">
+                            <input type="button" value="Calculate" onClick="getStatistics()">
+                            <input type="reset">
+                        </td>
+                        <td><a href="results.htm">Results</a></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td rowspan="4">
+                            <select id="listBox" size="9"></select>                      
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Summation: <input type="text" id="sum" name="sum"></td>
+                        <td>Mean: <input type="text" id="mean" name="mean"></td>
+                    </tr>
+                    <tr>
+                        <td>Median: <input type ="text" id="median" name="median">
+                            <td>Mode: <input type="text" id="mode" name="mode"></td>
+                    </tr>
+                    <tr>
+                        <td>Standard Deviation: <input type="text" id="stdDev" name="stdDev"></td>
+                        <td>Variance: <input type="text" id="variance" name="variance"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

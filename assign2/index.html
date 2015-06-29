@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/ePortfolio.css" rel="Stylesheet" type="text/css" media="screen">
+        <title>Dive Estimates</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script> 
+            
+            function validateForm() {
+                var x = document.form["Form"]["service"].value;
+                
+                if (x === null || x === "") {
+                alert("Name must be filled out");
+                return false;
+                }
+            }
+        
+            var myForm = document.forms["estimateForm"];
+            var rate = new Array();
+                rate["Hourly"] = 150.00;
+                rate["Monthly"] = 3.00;
+                rate["Contractual"] = 1000.00;
+            var cost = new Array();
+                cost["Shaft"] = 30.00;
+                cost["Rudder"]= 15.00;
+                cost["Transom"] = 100.00;
+            var tax = document.getElementById('salesTax').value;
+            var SUT = subtotal * tax;
+            var subtotal = parseInt(cost) + parseInt(rate);
+            var shaftChecked = document.getElementById('zShaft').checked;         
+            var rudderChecked = document.getElementById('zRudder').checked;
+            var trannyChecked = document.getElementById('zTransom').checked;
+            var shaftQuantity = document.getElementById('zShaftQuantity').value;
+            var rudderQuantity = document.getElementById('zRudderQuantity').value;
+            var trannyQuantity = document.getElementById('zTransomQuantity').value;
+            var hours = document.getElementById('laborHrs').value;
+            var monthly = document.getElementById('laborCost').value;
+            var hourlyRate = document.getElementById('Hourly').checked;
+            var monthRate = document.getElementById('Monthly').checked;
+            
+            function zincOrder()
+            {
+                if (shaftChecked)
+                    document.getElementById('parts').value = "Shaft Zincs";
+                else if(rudderChecked)
+                    document.getElementById('parts').value = "Rudder Zincs";
+                else if(trannyQuantity)
+                    document.getElementById('parts').value = "Transom Zinc";
+                else
+                    alarm("Please check ONLY ONE item per line order!");
+            }
+                
+            function calcTotal()
+            {
+                if(hourlyRate)
+                    rate += rate["Hourly"] * hours;
+                if(monthRate)
+                    rate += rate["Monthly"] * monthly;
+                
+                document.getElementById('laborCost').value = rate;
+                
+                if(shaftChecked)
+                    cost += cost["Shaft"] * shaftQuantity;
+                if(rudderChecked)
+                    cost += cost["Rudder"] * rudderQuantity;
+                if(trannyChecked)
+                    cost += cost["Transom"] * trannyQuantity;
+                
+                document.getElementById('price').value = cost;
+                document.getElementById('subTotal').value = subtotal;
+                document.getElementById('Total').value = (subtotal + SUT);
+
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <th><a href="../index.html">Home</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/Assign1/index.html">About Me</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/assign2/index.html">Estimate</a></th>
+                    <th><a href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/assign3/index.html">Statstics</a></th>
+                    <th><a href="http://www.groundworkjacksonville.org/" target="_blank">Groundwork Jax</a></th>
+                    <th><a href="http://www.clinasyst.net" target="_blank">Clinasyst CTMS</a></th>
+                    <th><a href="http://www.jaxresearch.com" target="_blank">Jax Research</a></th>
+                    <th><a href="mailto:n00816280@unf.edu">Contact Me</a></th>
+                    <!--<th><a href="http://www.linkedin.com">
+                        <img src="https://static.licdn.com/scds/common/u/img/logos/logo_132x32_2.png" alt = "Linked-in"></a>
+                    </th>-->
+                </tr>
+            </table>
+        </div>
+                <div class='heading'>
+                    <h2>Underwater Consultation Estimates</h2>
+                </div>
+                
+                <div>
+                   <form action="" id="estimateForm" name="myForm" onSubmit="return validateForm" method="post">
+                        <h3><a href="Form Flow.vsdx">Form Flow Process</a></h3>
+                        <h4>
+                        <label id="lblVessel">Vessel Name </label>      <input type="text" name="vesselName" id="vesselName">
+                        </h4>
+                        <h4>
+                        <label id="lblServiceDate">Enter requested service date </label><input id="svcDate" type = "date" name="Date" required>
+                        </h4>
+                        <h4>Choose the labor rate that fits your services</h4>
+                        <ul>
+                            <li>Hourly          <input type="radio" value=false id="Hourly" name="Hourly"></li>
+                            <li>Monthly         <input type='radio' value=false id="Monthly" name='Monthly'></li>
+                            <!--<li>Contractual     <input type="radio" value="false" id="Contract" name="Contract"></li>-->
+                        </ul>
+                        <h4>Select any parts you may need</h4>
+                        <ul>
+                            <li><label id="lblShaft">Shaft Zincs </label>       <input type="checkbox" value=0 id="zShaft" name="zShaft">      <label> $30.00</label></li>
+                            <li><label id="lblRudder">Rudder Zincs </label>     <input type="checkbox" value=0 id="zRudder" name="zRudder">    <label> $15.00</label></li>
+                            <li><label id="lblTransom">Transom Zinc </label>    <input type="checkbox" value=0 id="zTransom" name="zTransom">  <label> 100.00</label></li>
+                        </ul>
+                        <input type="button" value="Calculate Price" onclick="calcTotal();">
+                        <table>
+                            <tr>
+                                <th>Estimated price quote</th>
+                            </tr>
+                            <tr id="order">
+                                <td>
+                                    <label id="lblServices">Services </label>
+                                    <select id=services name='service' onchange="calcTotal()">
+                                        <option value="None">Select One</option>
+                                        <optgroup label="Hull Cleaning">
+                                            <option id="Zincs" value="Zincs">Change Zincs</option>
+                                            <option id="Hull" value="Hull Cleaning">Hull Cleaning</option>
+                                            <option id="prop" value="Prop Repair">Propeller Repair</option>
+                                            <option id="debris" value="Debris Removal">Debris Removal</option>
+                                        </optgroup>
+                                        <!--<option id="scoure">Bridge Scouring</option>
+                                        <option id="weld">Underwater Welding/Burning</option>
+                                        <option id="penetration">Penetration</option>
+                                        <option id="sat">Saturation</option>
+                                        <option id="piling">Pile Refurbishing</option>
+                                        <option id="dredge">Dredging</option>-->
+                                    </select>
+                                    <label id="lblTime">Hours </label><input type='text' id='laborHrs' name='Hours' value=1>
+                                    <label id="lblCOL">Cost of Labor </label><input type='text' id='laborCost' name='Labor'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="lblParts">Parts </label><input type='text' id='Parts' name='Parts'>
+                                    <label id="lblQuantity">Quantity </label><input type='number' id='qty' name='Quantity' value=1>
+                                    <label id="lblPrice">Price </label><input type='number' id='price' name='price'>
+                                </td>
+                            </tr>
+                            <tr id='subtotal'>
+                                <td>
+                                    <label id="lblSubTotal">Sub Total </label>   <input type='text' id='subTotal' name='subTotal' value="calcTotal()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="lblSalesTax">Sales Tax </label>   <input type='number' id='salesTax' name='Tax' value=0.07>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="lblTotal">Total </label>   <input type='text' id='Total' name='Total' value="calcTotal()">
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="reset">
+                        <input type="submit">
+                </form>
+            </div>
+    </body>
+</html>

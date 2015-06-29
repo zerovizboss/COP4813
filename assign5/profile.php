@@ -16,22 +16,23 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Profile Page</title>
         <script>
-	function changeStock()
+	function editStock()
 	{
-		document.myForm.action='change.php';
-		document.myForm.submit();
+            document.myForm.action='change.php';
+            document.myForm.submit();
+                
 	}
         function deleteStock()
         {
-                document.myForm.action='delete.php';
-                document.myForm.submit();
+            document.myForm.action='delete.php';
+            document.myForm.submit();
         }
     </script>
     </head>
     <body>
         <div id="main">
             <b id="welcome">Welcome to the stock ticker : <i><?php echo "$login"; ?></i></b>
-            <form id='stockQuote' action='add.php' method='post'>
+            <form id='stockQuote' action='add.php' method='post' name="editForm">
                 <table>
                     <tr>
                         <th>Ticker</th>
@@ -74,7 +75,7 @@ and open the template in the editor.
                     ?>
                 </div>
                 <div>
-                    <input type="button" onClick="deleteStock()" value="Delete"><input type="button" onClick="changeStock()" value="Change">
+                    <input type="submit" onClick="deleteStock()" value="Delete"><input type="submit" onClick="editStock()" value="Change">
                 </div>
             </form>
         </div>

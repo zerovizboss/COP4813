@@ -6,45 +6,57 @@ session_start();
     }
     
     $ticker = $_POST['ticker'];
+    $shares = $_POST['shares'];
+    $today = date("d.m.y");
     
-    //opens the data file and inserts the data into an array for indexing and manipulation
-    //$fp = fopen("dataSet.dat",'r');
+    $fp = fopen("dataSet.dat",'r');
     $i = 0;
-   
-    $open = fopen("dataSet.dat","r");//opens the data array to update the current records by their index
-    echo "$open dataSet file";
-    while($line = fgets($open)){
+    
+    while($line = fgets($fp)){
           $tickerArray[$i] = strtok($line, ",");
           $sharesArray[$i] = strtok(",");
           $todayArray[$i] = strtok(",");
           $i++;
     }
+    fclose($fp);
     
-    echo "$tickerArray[$i] stock tick";
-    foreach($open as $stockTick)
-    {
-        if($ticker == $tickerArray[$stockTick])
+    $fp = fopen("dataSet.dat",'w+');
+    
+    for($j=0; $j<$fp[$i]; $j++){
+        if($ticker == $fp[$j])
         {
-            /*$ticker = strtok($line,",");
-            $shares = strtok(",");
-            $today = date("d.m.y");*/
-            fwrite($fp,"$ticker,$shares,$today\n");
-        }
-        else
-        {
-            echo $error="location: index.php?error=3";
-            exit;
+            $ticker = $tickerArray[$j];
+            $shares = $sharesArray[$j];
+            $today = $todayArray[$j];
+            fwrite($fp[$j],"$ticker,$shares,$today");
         }
     }
-    /*for($k=0; $k<$fp.length; $k++){
-        if($ticker == $tickerArray[$k]){
-            $tickerArray[$k] = strtok($line,",");
-            $sharesArray[$k] = strtok(",");
-            $todayArray[$k] = strtok(",");
-            echo "$tickerArray[$k], $sharesArray[$k], $todayArray[$k]";
-            fwrite($fp,"$tickerArray[$k],$sharesArray[$k],$todayArray[$k]");
-        }
-    }*/
-    fclose($open);
-    header('location: profile.php');
+    echo "$ticker with $shares is being on $today date";
+    fclose($fp);
+    //header('location: profile.php');
 ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stock Update</title>
+    </head>
+    <body>
+        <form action="" name="Update" method="post">
+            <table>
+                <tr>
+                    <td>Ticker: </td><td><input type='text' name='ticker'></td>
+                </tr>
+                <tr>
+                    <td>
+                        Shares: </td><td><input type='number' name='shares'></td>
+                </tr>
+            </table>
+            <br>
+            <div>
+                <input type="submit" name="Update" onClick="editStock()" value="Update">
+            </div>
+        </form>
+    </body>
+    
+    
+</html>

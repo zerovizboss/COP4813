@@ -1,7 +1,7 @@
 <?php
     $username = "N00816280";
     $password = "cop816280";
-    $hostname = "localhost:3306";
+    $hostname = "localhost";
     $database = "N00816280";
     $conn = mysql_connect($hostname,$username,$password,False);
     mysql_select_db($database,$conn) or die("Unable to locate database");

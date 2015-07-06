@@ -3,22 +3,32 @@
     $password = "cop816280";
     $hostname = "localhost";
     $database = "N00816280";
-    $conn = mysql_connect($hostname,$username,$password,False);
-    mysql_select_db($database,$conn) or die("Unable to locate database");
+    $conn = mysql_connect($hostname,$database,$username,$password,false);
+    mysql_selectdb($database,$conn) or die("Unable to locate database");
     
     if(!$conn)
     {
-        die("Failed to connect, verify your username and password are correct " . mysql_connect_error());
+        die($username . "Failed to login on server, verify your username and password are correct " . mysql_error($conn));
     }
-    echo "Successful Connection";
-    //Create Table
-    $sqlStmnt = "CREATE TABLE Employment(id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,Employer VARCHAR(30) NOT NULL,StartDate DATE,FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State(VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15))";
-    if(mysql_query($conn,$sqlStmnt))
-    {
-        mysql_query(show_tables());
-    }
+    else {echo "Successful Connection";}
     
-    mysql_close($conn);
+    //Create Table
+    $strSQL = "CREATE TABLE Employment(id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,Employer VARCHAR(30) NOT NULL,StartDate DATE(mm-dd-yyyy),FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State(VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15))";
+    if($sqlStmnt == $conn -> prepare($strSQL)){
+        //$sqlStmnt -> bind_param("ss",$username,$password);
+        $sqlStmnt -> execute();
+        $sqlStmnt -> bind_result($result);
+        $sqlStmnt -> fetch();
+        //$sqlStmnt -> show_tables();
+        $sqlStmnt -> close();
+    }
+    if(mysql_db_query($database,$stmnt->execute()))
+    {
+        mysql_db_query($database,show_tables);
+    }
+    echo $sqlStmnt;
+    
+ mysql_close($conn);
 ?>
 <!DOCTYPE html>
 <!--
@@ -87,24 +97,24 @@ and open the template in the editor.
         <form action='' method='post' name='results'>
             <?php
                 //connections string to access the backend database
-                $mysql_access = mysql_connect('localhost','N00816280','cop816280');
+                $mysql_access = dbx_connect($hostname,$database,$username,$password,dbx_persistent);
                 if (!$mysql_access)
                 {
-                    die('Unable to connect to mySQL database ' . mysql_error());
+                    die('Unable to connect to mySQL database ' . dbx_error($conn));
                 }
 
                 //select my database
-                mysql_select_db('N00816280')or die("Unable to select database");
+                //mysql_select_db('N00816280')or die("Unable to select database");
 
                 //create sql statements
-                $query = "SELECT * FROM Persons ";
+                $query = 'SELECT * FROM Persons ';
 
                 //store results after submitting the query to the server database using the connection
-                $results = mysql_query($query, $mysql_access);
+                $results = dbx_query($query, $mysql_access);
 
                 //display the data
                 echo "<table border='1'>";
-                while($row = mysql_fetch_row($results))
+                while($row = dbx_fetch_row($results))
                 {
                     $empID = $row[0];
                     $emp = $row[1];
@@ -133,7 +143,7 @@ and open the template in the editor.
                 echo "</table>";
 
                 //ensure disconnection from the database when done...turn off the lights when you leave.
-                mysql_close($mysql_access);
+                dbx_close($mysql_access);
             ?>
             <div>
                 <input type='button' onClick='deleteRecord()' value='Delete'>

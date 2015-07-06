@@ -17,7 +17,7 @@
                         <td>Password: </td><td><input type="password" name="password" placeholder="**********"></td>
                     </tr>
                     <tr>
-                        <td></td><td><input type="submit" name="submit" value="sign in"><input type="reset" name="clear"></td>
+                        <td></td><td><input type="submit" name="signin" value="sign in"><input type="reset" name="clear"></td>
                     </tr>
                 </table>
                 <span><?php $error = $_GET['error'];

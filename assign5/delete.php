@@ -21,7 +21,6 @@ session_start();
     
     for($j=0; $j<$i; $j++){
         if($ticker != $tickerArray[$j]){
-            //echo "$ticker tick";
             fwrite($fp,"$tickerArray[$j],$sharesArray[$j],$todayArray[$j],");
         }
     }

@@ -7,7 +7,7 @@
     
     $ticker = $_POST['ticker'];
     $shares = $_POST['shares'];
-    $today = date("d.m.y");
+    $today = date("dd/mm/yyyy");
     
     $fp = fopen("dataSet.dat",'a');
     

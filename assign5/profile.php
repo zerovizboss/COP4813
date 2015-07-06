@@ -16,6 +16,11 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Profile Page</title>
         <script>
+        function addStock()
+        {
+            document.addForm.action='add.php';
+            document.addForm.submit();
+        }
 	function editStock()
 	{
             document.myForm.action='change.php';
@@ -32,7 +37,7 @@ and open the template in the editor.
     <body>
         <div id="main">
             <b id="welcome">Welcome to the stock ticker : <i><?php echo "$login"; ?></i></b>
-            <form id='stockQuote' action='add.php' method='post' name="editForm">
+            <form id='stockQuote' action='' method='post' name="addForm">
                 <table>
                     <tr>
                         <th>Ticker</th>
@@ -45,16 +50,15 @@ and open the template in the editor.
                             Shares: </td><td><input type='number' name='shares'></td>
                     </tr>
                 </table>
-                <div><input type="submit" onClick="addStock()" value="Add"><input type="reset" value="clear"></div>
+                <div><input type="submit" onclick="addStock()" value="Add Stock Tick"><input type="reset" value="clear"></div>
             </form>
             <form action='' method='post' name="myForm">
                 <div>
 
                     <?php
                         $fp = fopen("dataSet.dat", "r");
-
-                            echo "<ul>";
                             echo "$login has the following shares of stock:\n";
+                            echo "<ul>";
 
                             while($line = fgets($fp)){
                                 $ticker = strtok($line, ",");
@@ -65,12 +69,12 @@ and open the template in the editor.
 				$value = strtok($stock_info, ",");
 				$value =  strtok(",");
 				$total_value = $shares * $value;
+                                $totalPortfolio += $total_value;
 
-                               echo "<li><input type='radio' value='$ticker' name='ticker'> $shares shares of $ticker stock as of $today the value is $value for a total networth of $total_value</li>";
-                               
+                               echo "<li><input type='radio' value='$ticker' name='ticker'> $shares shares of $ticker stock as of $today the value is $value worth $total_value</li>";                         
                             }
-
                             echo "</ul>";
+                            echo "$login Portfolio networth is $totalPortfolio";
                             fclose($fp);
                     ?>
                 </div>

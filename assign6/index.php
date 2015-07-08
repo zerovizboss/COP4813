@@ -1,34 +1,24 @@
 <?php
-    $username = "N00816280";
-    $password = "cop816280";
-    $hostname = "localhost";
-    $database = "N00816280";
-    $conn = mysql_connect($hostname,$database,$username,$password,false);
-    mysql_selectdb($database,$conn) or die("Unable to locate database");
+    require_once 'dbConfig.php';
+    //$username = "N00816280";
+    //$password = "cop816280";
+    //$hostname = "localhost";
+    //$database = "N00816280";
     
-    if(!$conn)
+    try
     {
-        die($username . "Failed to login on server, verify your username and password are correct " . mysql_error($conn));
+        $conn = new PDO("mysql: host=$hostname; dbname=$database; charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        echo "Successfully connected to $hostname on database $database";
     }
-    else {echo "Successful Connection";}
+    catch(PDOException $pe)
+    {
+        die($username . "Failed to login on database $database, verify your username and password are correct" . $pe->getMessage());
+    }
     
     //Create Table
-    $strSQL = "CREATE TABLE Employment(id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,Employer VARCHAR(30) NOT NULL,StartDate DATE(mm-dd-yyyy),FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State(VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15))";
-    if($sqlStmnt == $conn -> prepare($strSQL)){
-        //$sqlStmnt -> bind_param("ss",$username,$password);
-        $sqlStmnt -> execute();
-        $sqlStmnt -> bind_result($result);
-        $sqlStmnt -> fetch();
-        //$sqlStmnt -> show_tables();
-        $sqlStmnt -> close();
-    }
-    if(mysql_db_query($database,$stmnt->execute()))
-    {
-        mysql_db_query($database,show_tables);
-    }
-    echo $sqlStmnt;
-    
- mysql_close($conn);
+    $sqlStmt = $conn->prepare("CREATE TABLE IF NOT EXISTS Employment(id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,mime VARCHAR(255) NOT NULL, Employer VARCHAR(30) NOT NULL,StartDate DATE,FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15));");
+    $sqlStmt->execute();
+    $conn = NULL;
 ?>
 <!DOCTYPE html>
 <!--
@@ -96,25 +86,16 @@ and open the template in the editor.
         </form>
         <form action='' method='post' name='results'>
             <?php
-                //connections string to access the backend database
-                $mysql_access = dbx_connect($hostname,$database,$username,$password,dbx_persistent);
-                if (!$mysql_access)
-                {
-                    die('Unable to connect to mySQL database ' . dbx_error($conn));
-                }
-
-                //select my database
-                //mysql_select_db('N00816280')or die("Unable to select database");
-
                 //create sql statements
-                $query = 'SELECT * FROM Persons ';
+                $query = $conn->prepare("SELECT * FROM Employment;");
+                $query->execute();
 
                 //store results after submitting the query to the server database using the connection
-                $results = dbx_query($query, $mysql_access);
+                $results = $query->fetch(PDO::FETCH_ASSOC);
 
                 //display the data
                 echo "<table border='1'>";
-                while($row = dbx_fetch_row($results))
+                foreach($results as $empRecord)
                 {
                     $empID = $row[0];
                     $emp = $row[1];
@@ -143,7 +124,7 @@ and open the template in the editor.
                 echo "</table>";
 
                 //ensure disconnection from the database when done...turn off the lights when you leave.
-                dbx_close($mysql_access);
+                $conn = NULL;
             ?>
             <div>
                 <input type='button' onClick='deleteRecord()' value='Delete'>

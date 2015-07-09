@@ -127,8 +127,8 @@ and open the template in the editor.
                 $conn = NULL;
             ?>
             <div>
-                <input type='button' onClick='deleteRecord()' value='Delete'>
-                <input type='button' onClick='editRecord()' value='Edit'>
+                <input type='button' onClick='addRecord()' value='Add'>
+                <input type='button' onClick='modifyRecord()' value='Edit'>
             </div>
         </form>
     </body>

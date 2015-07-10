@@ -4,7 +4,7 @@
     try
     {
         $conn = new PDO("mysql: host=$hostname;dbname=$database;charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        echo "<h3>You're connected to $database database on $hostname server</h3>";
+        echo "<h3>$username successfully connected to $database database on $hostname server</h3>";
     }
     catch(PDOException $pe)
     {
@@ -25,9 +25,9 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>PHP MySQL Intro Course</title>
-         <link href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/ePortfolio.css" rel="Stylesheet" type="text/css" media="screen">
-         <script src='/assign6/dbControls.js' type='text/javascript'></script>
-        <!--<script>
+        <link href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/ePortfolio.css" rel="Stylesheet" type="text/css" media="screen">
+        <!--<script src='/assign6/dbControls.js' type='text/javascript'></script>-->
+        <script>
         function addRecord()
         {
             document.history.action = 'addRecord.php';
@@ -35,7 +35,7 @@ and open the template in the editor.
         } 
         function modifyRecord()
         {
-            document.results.action = "modifyRecord.php";
+            document..action = "modifyRecord.php";
             document.results.submit();
         }
         function deleteRecord()
@@ -43,7 +43,7 @@ and open the template in the editor.
             document.results.action = 'deleteRecord.php';
             document.results.submit();
         }
-        </script>-->
+        </script>
     </head>
     <body>
         <form action='' name="history" method="post">
@@ -78,7 +78,7 @@ and open the template in the editor.
                 
                 <tr>
                     <td><input type='number' name='empID' hidden=''></td>
-                    <td><input type="submit" onClick='addRecord()' name="addRecord" value="Add Employer" ><input type="reset" value="clear"></td>
+                    <td><input type="submit" onClick='addRecord(); return false;' name="addRecord" value="Add Employer" ><input type="reset" value="clear"></td>
                 </tr>
             </table>
             
@@ -95,7 +95,7 @@ and open the template in the editor.
 
                 //display the data
                 echo "<table border='1'>";
-                foreach($result as $empRecord)
+                foreach($resultSet as $row)
                 {
                     $empID = $row[0];
                     $emp = $row[1];

@@ -1,14 +1,10 @@
 <?php
     require_once 'dbConfig.php';
-    //$username = "N00816280";
-    //$password = "cop816280";
-    //$hostname = "localhost";
-    //$database = "N00816280";
     
     try
     {
-        $conn = new PDO("mysql: host=$hostname; dbname=$database; charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        echo "Successfully connected to $hostname on database $database";
+        $conn = new PDO("mysql: host=$hostname;dbname=$database;charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        echo "<h3>You're connected to $database database on $hostname server</h3>";
     }
     catch(PDOException $pe)
     {
@@ -16,9 +12,8 @@
     }
     
     //Create Table
-    $sqlStmt = $conn->prepare("CREATE TABLE IF NOT EXISTS Employment(id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,mime VARCHAR(255) NOT NULL, Employer VARCHAR(30) NOT NULL,StartDate DATE,FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15));");
-    $sqlStmt->execute();
-    $conn = NULL;
+        $sqlStmt = $conn->prepare("CREATE TABLE IF NOT EXISTS Employment(id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,mime VARCHAR(255) NOT NULL, Employer VARCHAR(30) NOT NULL,StartDate DATE,FinishDate DATE,Address VARCHAR(50),City VARCHAR(30),State VARCHAR(3),Title VARCHAR(30),Email VARCHAR(30),Phone VARCHAR(15));");
+        $sqlStmt->execute();
 ?>
 <!DOCTYPE html>
 <!--
@@ -29,11 +24,18 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
-        <script>
-        function editRecord()
+        <title>PHP MySQL Intro Course</title>
+         <link href="http://cop4813.ccec.unf.edu/~N00816280/cop4813/ePortfolio.css" rel="Stylesheet" type="text/css" media="screen">
+         <script src='/assign6/dbControls.js' type='text/javascript'></script>
+        <!--<script>
+        function addRecord()
         {
-            document.results.action = "editRecord.php";
+            document.history.action = 'addRecord.php';
+            document.history.submit();
+        } 
+        function modifyRecord()
+        {
+            document.results.action = "modifyRecord.php";
             document.results.submit();
         }
         function deleteRecord()
@@ -41,12 +43,11 @@ and open the template in the editor.
             document.results.action = 'deleteRecord.php';
             document.results.submit();
         }
-        </script>
+        </script>-->
     </head>
     <body>
-        <form action="addRecord.php" method="post">
+        <form action='' name="history" method="post">
             <table>
-                
                 <tr>
                     <td>Employer</td><td><input type="text" name="emp"></td>
                 </tr>
@@ -74,12 +75,10 @@ and open the template in the editor.
                 <tr>
                     <td>Phone</td><td><input type="text" name="phone"></td>
                 </tr>
+                
                 <tr>
                     <td><input type='number' name='empID' hidden=''></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" name="Add Record"><input type="reset" value="clear"></td>
+                    <td><input type="submit" onClick='addRecord()' name="addRecord" value="Add Employer" ><input type="reset" value="clear"></td>
                 </tr>
             </table>
             
@@ -87,15 +86,16 @@ and open the template in the editor.
         <form action='' method='post' name='results'>
             <?php
                 //create sql statements
-                $query = $conn->prepare("SELECT * FROM Employment;");
-                $query->execute();
+                $sqlResults = "SELECT * FROM Employment;";
+                $result = $conn->prepare($sqlResults);
+                //$result->execute();
 
                 //store results after submitting the query to the server database using the connection
-                $results = $query->fetch(PDO::FETCH_ASSOC);
+                $resultSet = $result->fetch(PDO::FETCH_ASSOC);
 
                 //display the data
                 echo "<table border='1'>";
-                foreach($results as $empRecord)
+                foreach($result as $empRecord)
                 {
                     $empID = $row[0];
                     $emp = $row[1];
@@ -124,11 +124,11 @@ and open the template in the editor.
                 echo "</table>";
 
                 //ensure disconnection from the database when done...turn off the lights when you leave.
-                $conn = NULL;
+                //$conn = NULL;
             ?>
             <div>
-                <input type='button' onClick='addRecord()' value='Add'>
-                <input type='button' onClick='modifyRecord()' value='Edit'>
+                <input type='button' onClick='modifyRecord()' value='Update'>
+                <input type='button' onClick='deleteRecord()' value='Delete'>
             </div>
         </form>
     </body>

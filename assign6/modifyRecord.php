@@ -1,48 +1,53 @@
 <?php
-    $PID = $_POST['personID'];
-    $fName = $_POST['fname'];
-    $lName = $_POST['lname'];
-    $email = $_POST['email'];
+    $EID = $_POST['EID'];
+    $emp = $_post['emp'];
+    $sDate = $_POST['sDate'];
+    $fDate = $_POST['fDate'];
     $address = $_POST['address'];
     $city = $_POST['city'];
     $state = $_POST['state'];
-    $age = $_POST['age'];
+    $position = $_POST['position'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
     
-    //connections string to access the backend database
-    $mysql_access = mysql_connect('localhost','N00816280','cop816280');
-    if (!$mysql_access)
+    require_once 'dbConfig.php';
+    
+    try
     {
-        die('Unable to connect to mySQL database ' . mysql_error());
+        if($EID !== '')
+        {
+            $conn = new PDO("mysql: host=$hostname;dbname=$database;charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+            $conn->exec("USE " . $database . ";");  
+
+            $stmt = "UPDATE Employment ";
+            $stmt = $stmt . "SET Employer='?',StartDate='?',FinishDate='?',Address='?',City='?',State='?',Position='?',Email='?',Phone='?' ";
+            $stmt = $stmt . "WHERE id='?';";
+
+            $sqlUpdate = $conn->prepare($stmt);
+            $sqlUpdate->bindParam('EID', $EID);
+            $sqlUpdate->bindParam('Employer', $emp);
+            $sqlUpdate->bindParam('StartDate', $sDate);
+            $sqlUpdate->bindParam('FinishDate', $fDate);
+            $sqlUpdate->bindParam('Address', $address);
+            $sqlUpdate->bindParam('City', $city);
+            $sqlUpdate->bindParam('State', $state);
+            $sqlUpdate->bindParam('Position', $position);
+            $sqlUpdate->bindParam('Email', $email);
+            $sqlUpdate->bindParam('phone', $phone);
+            $sqlUpdate->execute();
+            
+            header("location: index.php");
+        }
+        else
+        {
+            echo header('location: addRecord.php');
+        }
+    }
+    catch(PDOException $pe)
+    {
+        die($username . "Failed to login on database $database, verify your username and password are correct" . $pe->getMessage());
     }
     
-    //select my database
-    mysql_select_db('N00816280');
     
-    $query = "UPDATE Persons";
-    $query = $query . "SET FirstName='$fName', LastName='$lName', Email='$email', Address='$address', City='$city',State='$state',Age='$age'";
-    $query = $query . "WHERE personID=" . $PID;
-    
-    //submit the query to the server database using the connection
-    mysql_query($query, $mysql_access);
-    
-    //ensure disconnection from the database when done...turn off the lights when you leave.
-    mysql_close($mysql_access);
-    header("location: index.php");
 ?>
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>

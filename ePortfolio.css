@@ -12,31 +12,37 @@ and open the template in the editor.
     text-align: center;
     border-bottom: double;
     border-top: double;
-    background-color: goldenrod;
+    background-color: silver;
     color: Navy;
     opacity: 0.8;
+}
+header{
+    alignment-adjust: auto;
 }
 html{
     background-color: navy;
 }
-
 body{
-    background: url("http://cop4813.ccec.unf.edu/~N00816280/cop4813/Images/oceanNights.jpg") no-repeat center center;
+    //background: url("http://cop4813.ccec.unf.edu/~N00816280/cop4813/Images/oceanNights.jpg") no-repeat center center;
     background-size: cover;
+    background-color: darkslategray;
     border-radius: 40px;
     position: relative;
+}
+h1{
+    alignment-adjust: auto;
 }
 h2{
     text-align: center;
     color: black;
 }
 h3{
-    color: goldenrod;
+    color: silver;
     text-align: center;
 }
 p{
     position: relative;
-    color: goldenrod;
+    color: silver;
     text-indent: 40px;
     text-align: left;
     background-color: navy;
@@ -51,7 +57,7 @@ p{
 }
 .aboutMe{
           font-family: verdana;
-          color: goldenrod;
+          color: silver;
 }
 .menubar{
     display: block;
@@ -65,43 +71,48 @@ p{
 }
 table, tr, th, td{
     border: 2px double;
+    table-layout: auto;
     font-family: verdana;
-    font-color: goldenrod;
-    color: goldenrod;
-    border-radius: 10px;
-    padding: 2px;
+    font-color: navy;
+    color: silver;
+    border-radius: 5px;
+    padding: auto;
 }
 table{
-    background-color: goldenrod;
-    width: 85%;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: silver;
+    alignment-adjust: middle;
+    width: auto;
     text-align: center;
 }
 th{
     text-align: center;
-    color: navy;
+    color: silver;
+    background-color: navy;
 }
 td{
     text-align: center;
     font-family: verdana;
     color: navy;
-    background-color: goldenrod;
+    background-color: silver;
     column-span: all;
 }
 a{
     border-radius: 2px;
-    padding: 3px;
+    padding: 2px;
     text-align: center;
     text-decoration: none;
 }
 a:link{
-    color: black;
-    background-color: goldenrod;
+    color: navy;
+    background-color: silver;
+    border-radius: 2px;
+    border: 1px;
 }
 a:visited{
-    color: navy;
-    background-color: goldenrod;
+    color: silver;
+    background-color: navy;
 }
 a:hover{
     color: silver;
@@ -109,18 +120,15 @@ a:hover{
 }
 a:active{
     color: goldenrod;
-    background-color: black;
+    background-color: silver;
 }
 #objective{
     background-color: navy;
     opacity: 0.8;
-    color: goldenrod;
+    color: silver;
     width: 80%;
     margin-left: 100px;
     margin-right: 100px;
-}
-ul{
-    position: relative;
 }
 form
 {

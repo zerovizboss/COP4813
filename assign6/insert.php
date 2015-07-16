@@ -15,7 +15,8 @@ class insert
 {
     public function insert()
     {
-        $sqlStmt = "INSERT INTO Employment(Employer,[Start Date],[Finish Date],Address,City,State,Position,Email,Phone) VALUES ('$emp','$sDate','$fdate','$address','$city','$state',$position,$email,$phone);";
+        $sqlStmt = "INSERT INTO Employment(Employer,[Start Date],[Finish Date],Address,City,State,Position,Email,Phone) ";
+        $sqlStmt = $sqlStmt . "VALUES (':emp',':sDate',':fdate',':address',':city',':state',:position,:email,:phone);";
         
         return $this->conn->exec($sqlStmt);
     }

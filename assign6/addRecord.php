@@ -1,47 +1,44 @@
 <?php
-    $PID = $_POST['personID'];
-    $fName = $_POST['fname'];
-    $lName = $_POST['lname'];
-    $email = $_POST['email'];
+    //$EID = $_POST['EID'];
+    $emp = $_POST['emp'];
+    $sDate = $_POST['sDate'];
+    $fDate = $_POST['fDate'];
     $address = $_POST['address'];
     $city = $_POST['city'];
     $state = $_POST['state'];
-    $age = $_POST['age'];
+    $position = $_POST['position'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
     
-    //connections string to access the backend database
-    $mysql_access = mysql_connect('localhost','N00816280','cop816280');
-    if (!$mysql_access)
+    require_once 'dbConfig.php';
+    
+    try
     {
-        die('Unable to connect to mySQL database ' . mysql_error());
+        //established a connection instance which keeps the database secure
+        $conn = new PDO("mysql: host=$hostname; dbname=$database; charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        
+        //sets the current database
+        $conn->exec("USE " . $database . ";");
+
+        //prepare the connection with the SQL statement that will be executed using PDO
+        $query = "INSERT INTO Employment(Employer,StartDate,FinishDate,Address,City,State,Position,Email,Phone)";
+        $query = $query . " VALUES (?,?,?,?,?,?,?,?,?);";
+        $sqlStmt = $conn->prepare($query);
+        $sqlStmt->bindParam(1,$emp);
+        $sqlStmt->bindParam(2,$sDate);
+        $sqlStmt->bindParam(3,$fDate);
+        $sqlStmt->bindParam(4,$address);
+        $sqlStmt->bindParam(5,$city);
+        $sqlStmt->bindParam(6,$state);
+        $sqlStmt->bindParam(7,$position);
+        $sqlStmt->bindParam(8,$email);
+        $sqlStmt->bindParam(9,$phone);    
+        $sqlStmt->execute(); 
+        
     }
-    
-    //select my database
-    mysql_select_db('N00816280');
-    
-    $query = "INSERT INTO Persons(First Name,Last Name,e-Mail,Address,City,State,Age)";
-    $query = $query . "VALUES ('$fName','$lName','$email','$address','$city','$state',$age)";
-    
-    //submit the query to the server database using the connection
-    mysql_query($query, $mysql_access);
-    
-    //ensure disconnection from the database when done...turn off the lights when you leave.
-    mysql_close($mysql_access);
-    header("location: index.php");
+    catch(PDOException $pe)
+    {
+        die($username . "Failed to login on database $database, verify your username and password are correct" . $pe->getMessage());
+    }
+    echo header('location: index.php');
 ?>
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>

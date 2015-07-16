@@ -80,7 +80,7 @@ and open the template in the editor.
                 document.getElementById("output").innerHTML = ajaxRequest.responseText;
             }
         }
-        var selection document.frmResults.empHistory.value;
+        var selection = document.frmResults.listEmploymers.value;
         
         ajaxRequest.open("GET", "getUpdate.php?selection=" + selection, true);
         ajaxRequest.send(NULL);
@@ -88,7 +88,7 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <form action='addRecord.php' method="post">
+        <!--<form action='addRecord.php' method="post">
             <table>
                 <caption>Add Employment Form</caption>
                 <tr>
@@ -129,8 +129,9 @@ and open the template in the editor.
             </table>
             
         </form>
-        <div><h3></h3></div>
+        <div><h3></h3></div>-->
         <form action='' method='POST' name='frmResults'>
+            <select name="listEmployers" onChange="ajax()">
             <?php
                 //require_once 'dbConfig.php';
                 try
@@ -162,7 +163,7 @@ and open the template in the editor.
                                 . "</tr>";
                         foreach($results as $row)
                         {
-                            $EID = $row['id'];
+                            /*$EID = $row['id'];
                             $emp = $row['Employer'];
                             $address = $row['Address'];
                             $city = $row['City'];
@@ -171,9 +172,10 @@ and open the template in the editor.
                             $fDate = $row['FinishDate'];                            
                             $position = $row['Position'];
                             $email = $row['Email'];
-                            $phone = $row['Phone'];
+                            $phone = $row['Phone'];*/
                             
-                            print "<tr>";
+                            echo "<option value='$row[0]'>$row[2]$row[3]$row[4]$row[5]$row[6]$row[7]$row[8]$row[9]</option>";
+                            /*print "<tr>";
                             print "<td><input type='radio' name='EID' value='$EID'></td>";
                             print "<td>$emp</td>";
                             print "<td>$address</td>";
@@ -184,7 +186,7 @@ and open the template in the editor.
                             print "<td>$position</td>";
                             print "<td>$email</td>";
                             print "<td>$phone</td>";
-                            print "</tr>";
+                            print "</tr>";*/
                         }
                         print "</table>";
                     }
@@ -193,10 +195,13 @@ and open the template in the editor.
                         die($username . "Failed to login on database $database, verify your username and password are correct" . $pe->getMessage());
                     }
             ?>
-            <div>
+            <!--<div>
                 <input type='button' onClick='editRecord()' value='Update'>
                 <input type='button' onClick='deleteRecord()' value='Delete'>
-            </div>
+            </div>-->
+            </select>
         </form>
+        <br>
+        <p id="output"></p>
     </body>
 </html>

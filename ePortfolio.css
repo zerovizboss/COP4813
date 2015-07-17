@@ -30,7 +30,7 @@ body{
     position: relative;
 }
 h1{
-    alignment-adjust: auto;
+    text-align: center;
 }
 h2{
     text-align: center;
@@ -39,6 +39,9 @@ h2{
 h3{
     color: silver;
     text-align: center;
+}
+#assign{
+    border-top: 5px double black;
 }
 p{
     position: relative;
@@ -145,6 +148,6 @@ button{
     background-color: goldenrod;
     color: navy;
 }
-footer{
+#footer{
     text-align: center;
 }

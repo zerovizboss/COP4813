@@ -1,19 +1,18 @@
-<?php
-    $EID = $_GET['selection'];
+<?php    
+    //$EID = $_GET['selection'];
     
     require_once 'dbConfig.php';
-    //require 'dbConfig.php';
+    
     try
     {
         $conn = new PDO("mysql: host=$hostname;dbname=$database;charset=utf8",$username,$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        //echo "<h3>$username successfully connected to $database database on $hostname server</h3>";
         
         $conn->exec("USE " . $database . ";");        
         
-        $query = "SELECT * FROM Employment WHERE id=" . $EID . ";";
+        $query = "SELECT * FROM Employment WHERE id=" . $_GET['selection'] . ";";
         $sqlStmt = $conn->prepare($query);
         $sqlStmt->execute();
-        $sqlStmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $sqlStmt->fetchAll(PDO::FETCH_ASSOC);
         
         print "<table>";
         print "<caption>Employment History</caption>";
@@ -61,4 +60,3 @@
     {
         die($username . "Failed to login on database $database, verify your username and password are correct" . $pe->getMessage());
     }
-?>
